@@ -13,16 +13,15 @@ def validate_name(name:str)-> bool:
 
 
 def validate_age(age:int)-> bool:
+    if isinstance(age,int):
+        return False
+    if not isinstance(age,int):
+        return False
     if age < 16 or age > 100:
         return False
 
     return True
-print(validate_age(15))
-print(validate_age(16))
-print(validate_age(22))
-print(validate_age(100))
-print(validate_age(101))
-print(validate_age(-5))
+
 
 
 
