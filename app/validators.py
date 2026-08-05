@@ -27,7 +27,15 @@ def validate_age(age:int)-> bool:
 
 
 def validate_cgpa(cgpa:float)-> bool:
-    pass
+    if isinstance(cgpa,bool):
+        return False
+    if not isinstance(cgpa, (int,float)):
+        return False
+    if cgpa < 0.0 or cgpa > 4.0:
+        return False
+
+    return True
+
 
 
 
