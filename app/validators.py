@@ -9,15 +9,20 @@ def validate_name(name:str)-> bool:
         return False
     
     return True
-print(validate_name("Noman"))
-print(validate_name("ali123"))
-print(validate_name("Mukurram Aziz"))
-print(validate_name("1234"))
 
 
 
 def validate_age(age:int)-> bool:
-    pass 
+    if age < 16 or age > 100:
+        return False
+
+    return True
+print(validate_age(15))
+print(validate_age(16))
+print(validate_age(22))
+print(validate_age(100))
+print(validate_age(101))
+print(validate_age(-5))
 
 
 
