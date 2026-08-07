@@ -41,4 +41,11 @@ def validate_cgpa(cgpa:float)-> bool:
 
 
 def validate_student_id(student_id:int)-> bool:
-    pass
+    if isinstance(student_id, bool):
+        return False
+    if not isinstance(student_id, int):
+        return False
+    if student_id <= 0:
+        return False
+
+    return True
