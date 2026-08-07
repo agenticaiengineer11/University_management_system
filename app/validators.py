@@ -13,7 +13,7 @@ def validate_name(name:str)-> bool:
 
 
 def validate_age(age:int)-> bool:
-    if isinstance(age,int):
+    if isinstance(age,bool):
         return False
     if not isinstance(age,int):
         return False

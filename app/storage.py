@@ -14,4 +14,22 @@ def load_students()-> list:
     except json.JSONDecodeError:
         return []
 
+def save_students(students:list) ->None:
+    try:
+        with open(DATA_FILE,"w") as file:
+            json.dump(students,file, indent=4)
+    except Exception as e:
+        print(f"Error saving students: {e}")
+
+students = [
+    {
+        "student_id": 1,
+        "name": "Noman",
+        "age": 22,
+        "department": "Software Engineering",
+        "cgpa": 3.75
+    }
+]
+
+save_students(students)
     

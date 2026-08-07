@@ -1,0 +1,16 @@
+[
+    {
+        "student_id": 1,
+        "name": "Noman",
+        "age": 22,
+        "department": "Software Engineering",
+        "cgpa": 3.75
+    },
+    {
+        "student_id": 2,
+        "name": "Ali",
+        "age": 21,
+        "department": "Computer Science",
+        "cgpa": 3.6
+    }
+]
