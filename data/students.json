@@ -5,5 +5,12 @@
         "age": 22,
         "department": "Software Engineering",
         "cgpa": 3.75
+    },
+    {
+        "student_id": 3,
+        "name": "Mukurram",
+        "age": 22,
+        "department": "Software Engineering",
+        "cgpa": 3.78
     }
 ]

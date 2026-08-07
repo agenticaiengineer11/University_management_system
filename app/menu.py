@@ -3,7 +3,8 @@ from app.services import (
     add_student,
     search_student,
     update_student,
-    delete_student
+    delete_student,
+    get_all_students
 )
 
 def show_menu() -> None:
@@ -61,6 +62,52 @@ def main()->None:
             else:
                 print("\n❌ Student not found.")
         
+        elif choice == "3":
+            print("\n========== Update Student ==========")
+
+            student_id = int(input("Enter Student ID: "))
+            name = input("Enter Updated Name: ").strip()
+            age = int(input("Enter Updated Age: "))
+            department = input("Enter Updated Department: ").strip()
+            cgpa = float(input("Enter Updated CGPA: "))
+
+            updated_student = Student(
+                student_id=student_id,
+                name=name,
+                age=age,
+                department=department,
+                cgpa=cgpa
+            )
+
+            result = update_student(updated_student)
+
+            if result:
+                print("\n✅ Student updated successfully.")
+            else:
+                print("\n❌ Student not found or invalid data.")
+        elif choice == "4":
+            print("\n========== Delete Student ==========")
+            student_id = int(input("Enter Student ID: "))
+            result = delete_student(student_id)
+            if result:
+                print("\n✅ Student deleted successfully.")
+            else:
+                print("\n❌ Student not found.")
+        elif choice == "5":
+            print("\n========== All Students ==========")
+
+            students = get_all_students()
+
+            if not students:
+                print("No students found.")
+            else:
+                for student in students:
+                    print("-" * 40)
+                    print(f"Student ID : {student['student_id']}")
+                    print(f"Name       : {student['name']}")
+                    print(f"Age        : {student['age']}")
+                    print(f"Department : {student['department']}")
+                    print(f"CGPA       : {student['cgpa']}")
         elif choice == "6":
             print("\nExiting...")
             break

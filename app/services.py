@@ -84,3 +84,5 @@ def delete_student(student_id: int) -> bool:
             return True
 
     return False
+def get_all_students():
+    return load_students()
