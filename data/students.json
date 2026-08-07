@@ -5,12 +5,5 @@
         "age": 22,
         "department": "Software Engineering",
         "cgpa": 3.75
-    },
-    {
-        "student_id": 2,
-        "name": "Mukurram Aziz",
-        "age": 23,
-        "department": "Information Technology",
-        "cgpa": 3.75
     }
 ]

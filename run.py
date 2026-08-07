@@ -1,5 +1,5 @@
 from app.models import Student
-from app.services import add_student,search_student, update_student
+from app.services import add_student,search_student, update_student,delete_student
 
 student = Student(
     student_id=2,
@@ -25,3 +25,6 @@ updated_student = Student(
 
 d = update_student(updated_student)
 print(d)
+
+f = delete_student(2)
+print(f)

@@ -66,3 +66,21 @@ def update_student(updated_student:Student) ->bool:
             return True
 
     return False
+def delete_student(student_id: int) -> bool:
+
+    if not validate_student_id(student_id):
+        return False
+
+    students = load_students()
+
+    for index, student in enumerate(students):
+
+        if student["student_id"] == student_id:
+
+            students.pop(index)
+
+            save_students(students)
+
+            return True
+
+    return False
