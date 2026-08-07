@@ -5,12 +5,5 @@
         "age": 22,
         "department": "Software Engineering",
         "cgpa": 3.75
-    },
-    {
-        "student_id": 3,
-        "name": "Bilal",
-        "age": 24,
-        "department": "Software engineering",
-        "cgpa": 3.45
     }
 ]

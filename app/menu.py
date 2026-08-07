@@ -44,5 +44,27 @@ def main()->None:
                 print("\n✅ Student added successfully.")
             else:
                 print("\n❌ Failed to add student.")
+        elif choice == "2":
+            print("\n========== Search Student ==========")
+
+            student_id = int(input("Enter Student ID: "))
+
+            student = search_student(student_id)
+
+            if student:
+                print("\nStudent Found")
+                print(f"Student ID : {student['student_id']}")
+                print(f"Name       : {student['name']}")
+                print(f"Age        : {student['age']}")
+                print(f"Department : {student['department']}")
+                print(f"CGPA       : {student['cgpa']}")
+            else:
+                print("\n❌ Student not found.")
+        
+        elif choice == "6":
+            print("\nExiting...")
+            break
+        else:
+            print("\nInvalid choice. Please try again.")
 if __name__ == "__main__":
     main()
