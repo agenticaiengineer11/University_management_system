@@ -39,3 +39,30 @@ def add_student(student: Student) -> bool:
 
     print("Student added successfully")
     return True
+
+def search_student(student_id: int):
+    students = load_students()
+    for student in students:
+        if student["student_id"] == student_id:
+            return student
+
+    return None
+
+def update_student(updated_student:Student) ->bool:
+    if not validate_student_id(updated_student.student_id):
+        return False
+    if not validate_name(updated_student.name):
+        return False
+    if not validate_age(updated_student.age):
+        return False
+    if not validate_cgpa(updated_student.cgpa):
+        return False
+    students = load_students()
+
+    for index , student in enumerate(students):
+        if student["student_id"] == updated_student.student_id:
+            students[index] = asdict(updated_student)
+            save_students(students)
+            return True
+
+    return False

@@ -1,5 +1,5 @@
 from app.models import Student
-from app.services import add_student
+from app.services import add_student,search_student, update_student
 
 student = Student(
     student_id=2,
@@ -12,3 +12,16 @@ student = Student(
 result = add_student(student)
 
 print(result)
+data = search_student(1)
+print(data)
+
+updated_student = Student(
+    student_id=2,
+    name="Mukurram Aziz",
+    age=23,
+    cgpa=3.75,
+    department="Information Technology"
+)
+
+d = update_student(updated_student)
+print(d)
