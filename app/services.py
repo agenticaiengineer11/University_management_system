@@ -1,5 +1,6 @@
 from app.models import Student
 from dataclasses import asdict
+from app.exceptions import StudentNotFoundError,ValidationError,DuplicateStudentError
 from app.validators import (
     validate_name,
     validate_age,
@@ -30,8 +31,9 @@ def add_student(student: Student) -> bool:
 
     for existing_student in students:
         if existing_student["student_id"] == student.student_id:
-            print("Duplicate Student ID")
-            return False
+            raise DuplicateStudentError(
+                f"Student ID {student.student_id} already exists."
+        )
 
     student_dict = asdict(student)
     students.append(student_dict)
@@ -41,12 +43,18 @@ def add_student(student: Student) -> bool:
     return True
 
 def search_student(student_id: int):
+    if not validate_student_id(student_id):
+        raise ValidationError("Invalid student ID.")
+
     students = load_students()
+
     for student in students:
         if student["student_id"] == student_id:
             return student
 
-    return None
+    raise StudentNotFoundError(
+        f"Student with ID {student_id} was not found."
+    )
 
 def update_student(updated_student:Student) ->bool:
     if not validate_student_id(updated_student.student_id):

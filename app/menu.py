@@ -1,4 +1,5 @@
 from app.models import Student
+from app.exceptions import StudentNotFoundError, ValidationError
 from app.services import (
     add_student,
     search_student,
@@ -7,6 +8,20 @@ from app.services import (
     get_all_students
 )
 
+def get_integer_input(prompt: str) -> int:
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+def get_float_input(prompt: str) -> float:
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 def show_menu() -> None:
 
     print("\n" + "=" * 50)
@@ -50,26 +65,30 @@ def main()->None:
 
             student_id = int(input("Enter Student ID: "))
 
-            student = search_student(student_id)
+            try:
+                student = search_student(student_id)
 
-            if student:
                 print("\nStudent Found")
                 print(f"Student ID : {student['student_id']}")
                 print(f"Name       : {student['name']}")
                 print(f"Age        : {student['age']}")
                 print(f"Department : {student['department']}")
                 print(f"CGPA       : {student['cgpa']}")
-            else:
-                print("\n❌ Student not found.")
+
+            except StudentNotFoundError as error:
+                print(f"\n❌ {error}")
+
+            except ValidationError as error:
+                print(f"\n❌ {error}")
         
         elif choice == "3":
             print("\n========== Update Student ==========")
 
-            student_id = int(input("Enter Student ID: "))
+            student_id = get_integer_input("Enter Student ID: ")
             name = input("Enter Updated Name: ").strip()
-            age = int(input("Enter Updated Age: "))
+            age = get_integer_input("Enter Updated Age: ")
             department = input("Enter Updated Department: ").strip()
-            cgpa = float(input("Enter Updated CGPA: "))
+            cgpa = get_float_input("Enter Updated CGPA: ")
 
             updated_student = Student(
                 student_id=student_id,
