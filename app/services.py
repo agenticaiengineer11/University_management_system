@@ -57,14 +57,17 @@ def search_student(student_id: int):
     )
 
 def update_student(updated_student:Student) ->bool:
-    if not validate_student_id(updated_student.student_id):
-        return False
-    if not validate_name(updated_student.name):
-        return False
-    if not validate_age(updated_student.age):
-        return False
-    if not validate_cgpa(updated_student.cgpa):
-        return False
+    if not validate_student_id(student.student_id):
+        raise ValidationError("Invalid student ID.")
+
+    if not validate_name(student.name):
+        raise ValidationError("Invalid student name.")
+
+    if not validate_age(student.age):
+        raise ValidationError("Invalid student age.")
+
+    if not validate_cgpa(student.cgpa):
+        raise ValidationError("Invalid CGPA.")
     students = load_students()
 
     for index , student in enumerate(students):
@@ -73,11 +76,13 @@ def update_student(updated_student:Student) ->bool:
             save_students(students)
             return True
 
-    return False
+    raise StudentNotFoundError(
+    f"Student with ID {student.student_id} was not found."
+)
 def delete_student(student_id: int) -> bool:
 
-    if not validate_student_id(student_id):
-        return False
+    if not validate_student_id(student.student_id):
+        raise ValidationError("Invalid student ID.")
 
     students = load_students()
 
@@ -91,6 +96,8 @@ def delete_student(student_id: int) -> bool:
 
             return True
 
-    return False
+    raise StudentNotFoundError(
+    f"Student with ID {student_id} was not found."
+)
 def get_all_students():
     return load_students()
