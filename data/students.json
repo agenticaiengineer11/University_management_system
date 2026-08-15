@@ -5,12 +5,5 @@
         "age": 22,
         "department": "Software Engineering",
         "cgpa": 3.75
-    },
-    {
-        "student_id": 4,
-        "name": "Hamza",
-        "age": 23,
-        "department": "English",
-        "cgpa": 3.46
     }
 ]
