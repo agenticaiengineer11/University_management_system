@@ -1,5 +1,9 @@
 from app.models import Student
-from app.exceptions import StudentNotFoundError, ValidationError
+from app.exceptions import (
+    StudentNotFoundError,
+    ValidationError,
+    DuplicateStudentError
+)
 from app.services import (
     add_student,
     search_student,
@@ -7,6 +11,7 @@ from app.services import (
     delete_student,
     get_all_students
 )
+
 
 def get_integer_input(prompt: str) -> int:
     while True:
@@ -22,8 +27,25 @@ def get_float_input(prompt: str) -> float:
             return float(input(prompt))
         except ValueError:
             print("Invalid input. Please enter a number.")
-def show_menu() -> None:
 
+
+def get_student_input() -> Student:
+    student_id = get_integer_input("Enter Student ID: ")
+    name = input("Enter Student Name: ").strip()
+    age = get_integer_input("Enter Student Age: ")
+    department = input("Enter Department: ").strip()
+    cgpa = get_float_input("Enter CGPA: ")
+
+    return Student(
+        student_id=student_id,
+        name=name,
+        age=age,
+        department=department,
+        cgpa=cgpa
+    )
+
+
+def show_menu() -> None:
     print("\n" + "=" * 50)
     print("     UNIVERSITY MANAGEMENT SYSTEM")
     print("=" * 50)
@@ -35,35 +57,36 @@ def show_menu() -> None:
     print("5. Display All Students")
     print("6. Exit")
 
-def main()->None:
+
+def main() -> None:
     while True:
         show_menu()
 
         choice = input("Enter your choice: ").strip()
-        if choice == "1":
-            print("\n ===============Add New Student=============")
-            student_id = int(input("Enter Student ID: "))
-            name = input("Enter Student Name: ").strip()
-            age = int(input("Enter Student Age: "))
-            department = input("Enter Department: ").strip()
-            cgpa = float(input("Enter CGPA: "))
 
-            student = Student(
-            student_id=student_id,
-            name=name,
-            age=age,
-            department=department,
-            cgpa=cgpa
-)
-            result = add_student(student)
-            if result:
-                print("\n✅ Student added successfully.")
-            else:
-                print("\n❌ Failed to add student.")
+        if choice == "1":
+
+            print("\n=============== Add New Student =============")
+
+            try:
+                student = get_student_input()
+
+                result = add_student(student)
+
+                if result:
+                    print("\n✅ Student added successfully.")
+
+            except DuplicateStudentError as error:
+                print(f"\n❌ {error}")
+
+            except ValidationError as error:
+                print(f"\n❌ {error}")
+
         elif choice == "2":
+
             print("\n========== Search Student ==========")
 
-            student_id = int(input("Enter Student ID: "))
+            student_id = get_integer_input("Enter Student ID: ")
 
             try:
                 student = search_student(student_id)
@@ -80,45 +103,51 @@ def main()->None:
 
             except ValidationError as error:
                 print(f"\n❌ {error}")
-        
+
         elif choice == "3":
+
             print("\n========== Update Student ==========")
 
-            student_id = get_integer_input("Enter Student ID: ")
-            name = input("Enter Updated Name: ").strip()
-            age = get_integer_input("Enter Updated Age: ")
-            department = input("Enter Updated Department: ").strip()
-            cgpa = get_float_input("Enter Updated CGPA: ")
+            try:
+                updated_student = get_student_input()
 
-            updated_student = Student(
-                student_id=student_id,
-                name=name,
-                age=age,
-                department=department,
-                cgpa=cgpa
-            )
+                result = update_student(updated_student)
 
-            result = update_student(updated_student)
+                if result:
+                    print("\n✅ Student updated successfully.")
 
-            if result:
-                print("\n✅ Student updated successfully.")
-            else:
-                print("\n❌ Student not found or invalid data.")
+            except StudentNotFoundError as error:
+                print(f"\n❌ {error}")
+
+            except ValidationError as error:
+                print(f"\n❌ {error}")
         elif choice == "4":
+
             print("\n========== Delete Student ==========")
-            student_id = int(input("Enter Student ID: "))
-            result = delete_student(student_id)
-            if result:
-                print("\n✅ Student deleted successfully.")
-            else:
-                print("\n❌ Student not found.")
+
+            student_id = get_integer_input("Enter Student ID: ")
+
+            try:
+                result = delete_student(student_id)
+
+                if result:
+                    print("\n✅ Student deleted successfully.")
+
+            except StudentNotFoundError as error:
+                print(f"\n❌ {error}")
+
+            except ValidationError as error:
+                print(f"\n❌ {error}")
+
         elif choice == "5":
+
             print("\n========== All Students ==========")
 
             students = get_all_students()
 
             if not students:
                 print("No students found.")
+
             else:
                 for student in students:
                     print("-" * 40)
@@ -127,10 +156,16 @@ def main()->None:
                     print(f"Age        : {student['age']}")
                     print(f"Department : {student['department']}")
                     print(f"CGPA       : {student['cgpa']}")
+
         elif choice == "6":
-            print("\nExiting...")
+
+            print("\nExiting University Management System...")
             break
+
         else:
-            print("\nInvalid choice. Please try again.")
+
+            print("\n❌ Invalid choice. Please try again.")
+
+
 if __name__ == "__main__":
     main()
