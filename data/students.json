@@ -5,5 +5,12 @@
         "age": 22,
         "department": "Software Engineering",
         "cgpa": 3.75
+    },
+    {
+        "student_id": 11,
+        "name": "nomi",
+        "age": 23,
+        "department": "fsd",
+        "cgpa": 3.34
     }
 ]

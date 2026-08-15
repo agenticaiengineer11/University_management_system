@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 from app.models import Student
 from dataclasses import asdict
 from app.exceptions import StudentNotFoundError,ValidationError,DuplicateStudentError
@@ -10,6 +12,7 @@ from app.validators import (
 from app.storage import load_students , save_students
 
 def add_student(student: Student) -> bool:
+    logger.info("add_student() called")
 
     if not validate_student_id(student.student_id):
         print("Student ID validation failed")
@@ -38,8 +41,9 @@ def add_student(student: Student) -> bool:
     student_dict = asdict(student)
     students.append(student_dict)
     save_students(students)
-
-    print("Student added successfully")
+    logger.info(
+    f"Student added successfully | ID: {student.student_id} | Name: {student.name}"
+)
     return True
 
 def search_student(student_id: int):
