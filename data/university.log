@@ -1,3 +1,1 @@
 2026-08-15 17:46:53,263 | INFO | TEST | LOGGING TEST
-2026-08-15 17:55:22,983 | INFO | app.services | add_student() called
-2026-08-15 17:55:22,984 | INFO | app.services | Student added successfully | ID: 11 | Name: nomi
